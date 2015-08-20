@@ -29,7 +29,3 @@ $app->get('/bcrypt/{whatever}', function ($whatever) {
     $bc = bcrypt($whatever);
     return $whatever . " -> " . $bc . " (" . Hash::check($whatever, $bc) . ")";
 });
-
-$app->get('/test', function() {
-    return url('/derp');
-});

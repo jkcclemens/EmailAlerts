@@ -14,7 +14,7 @@
 </p>
 <p>
     <small>
-        Oh, and if it wasn't you that request this, just ignore it. No one can use your email for anything unless it's
+        Oh, and if it wasn't you that requested this, just ignore it. No one can use your email for anything unless it's
         verified.
     </small>
 </p>
