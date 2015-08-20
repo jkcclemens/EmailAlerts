@@ -21,12 +21,16 @@ class SendVerificationEmail extends Job implements SelfHandling, ShouldQueue {
 
     public function handle() {
         $email = $this->email;
-        Mail::send('emails.verify_email', [
-            'email' => $email->email,
-            'verify_link' => 'http://localhost:8000/verifyemail/' . $email->id . '/' . $email->verification_key // TODO: Real URL
-        ], function ($m) use ($email) {
-            $m->to($email)->subject('Verify your email!');
-        });
+        Mail::send(
+            'emails.verify_email',
+            [
+                'email' => $email->email,
+                'verify_link' => url('/verifyemail/' . $email->id . '/' . $email->verification_key)
+            ],
+            function ($m) use ($email) {
+                $m->to($email)->subject('Verify your email!');
+            }
+        );
     }
 
     /**
