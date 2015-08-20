@@ -3,11 +3,11 @@
 
 use App\Email;
 use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
+use Mail;
 
 class SendVerificationEmail extends Job implements SelfHandling, ShouldQueue {
 
@@ -19,9 +19,9 @@ class SendVerificationEmail extends Job implements SelfHandling, ShouldQueue {
         $this->email = $email;
     }
 
-    public function handle(Mailer $mailer) {
+    public function handle() {
         $email = $this->email;
-        $mailer->send('emails.verify_email', [
+        Mail::send('emails.verify_email', [
             'email' => $email->email,
             'verify_link' => 'http://localhost:8000/verifyemail/' . $email->id . '/' . $email->verification_key // TODO: Real URL
         ], function ($m) use ($email) {
