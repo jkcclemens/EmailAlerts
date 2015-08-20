@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Email;
+use App\Jobs\SendVerificationEmail;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,7 @@ class EmailController extends DefaultController {
         $email->email = $request->get('email');
         $email->user_id = Auth::user()->id;
         $email->save();
+        $this->dispatch(new SendVerificationEmail($email));
         return redirect()->back();
     }
 
