@@ -1,17 +1,9 @@
 <?php namespace App\Jobs;
 
-
 use App\Email;
-use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\Jobs\Job;
-use Illuminate\Queue\SerializesModels;
 use Mail;
 
-class SendVerificationEmail extends Job implements SelfHandling, ShouldQueue {
-
-    use InteractsWithQueue, SerializesModels;
+class SendVerificationEmail extends Job {
 
     private $email;
 

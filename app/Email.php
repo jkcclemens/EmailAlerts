@@ -14,15 +14,16 @@ use Illuminate\Support\Str;
  * @property integer $user_id
  * @property string $email
  * @property boolean $verified
- * @method static Builder|\App\Email whereId($value)
- * @method static Builder|\App\Email whereCreatedAt($value)
- * @method static Builder|\App\Email whereUpdatedAt($value)
- * @method static Builder|\App\Email whereUserId($value)
- * @method static Builder|\App\Email whereEmail($value)
- * @method static Builder|\App\Email whereVerified($value)
- * @property-read \App\User $user
  * @property string $verification_key
- * @property-read \Illuminate\Database\Eloquent\Collection|\ $related[] $morphedByMany
+ * @property-read \App\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Notification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany
+ * @method static \Illuminate\Database\Query\Builder|\App\Email whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Email whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Email whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Email whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Email whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Email whereVerified($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Email whereVerificationKey($value)
  */
 class Email extends Model {
@@ -32,8 +33,16 @@ class Email extends Model {
         $this->verification_key = Str::random(16);
     }
 
+    public function isPrimary() {
+        return $this->email == $this->user->email;
+    }
+
     public function user() {
         return $this->belongsTo('App\User');
+    }
+
+    public function notifications() {
+        return $this->hasMany('App\Notification');
     }
 
 }

@@ -28,9 +28,7 @@ i.icon.hover {
 i.icon.hover:hover {
   opacity: 1;
 }
-i.icon.close {
-  cursor: pointer;
-}
-a > i.icon.close {
+a > i.icon {
   color: rgba(0, 0, 0, 0.87);
+  cursor: pointer;
 }

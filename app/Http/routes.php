@@ -18,6 +18,7 @@ $app->get('/logout', ['uses' => 'LoginController@logOut']);
 
 $app->post('/signup', ['uses' => 'LoginController@signUp']);
 $app->post('/login', ['uses' => 'LoginController@logIn']);
+$app->post('/receive', ['uses' => 'EmailController@receive']);
 
 $app->group(['middleware' => 'auth'], function (\Laravel\Lumen\Application $app) {
     $app->post('/addemail', ['uses' => '\App\Http\Controllers\EmailController@addEmail']);

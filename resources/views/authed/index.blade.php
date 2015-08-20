@@ -15,7 +15,13 @@
             </ul>
         </div>
     @endif
-    <h1>Sup</h1>
+    <p>
+        Sent notifications will appear here, once some arrive.
+    </p>
+    <p>
+        If you're expecting a forwarding verification email, the first email to arrive from any newly-verified email
+        address will be available in its entirety on this page, once it arrives.
+    </p>
 @endsection
 
 @section('left')
@@ -23,10 +29,17 @@
         @foreach($user->emails as $email)
             <div class="{{ $email->verified ? 'green' : 'red' }} card">
                 <div class="content">
-                    <a href="/removeemail/{{ $email->id }}"><i class="right floated hover close icon"></i></a>
+                    @if(!($email->user->emails()->count() < 2 and $email->isPrimary()))
+                        <a title="Remove this email" href="/removeemail/{{ $email->id }}"><i
+                                    class="right floated hover close icon"></i></a>
+                    @endif
+                    @if(!$email->isPrimary() and $email->verified)
+                        <a title="Make this your primary email" href="/makeprimary/{{ $email->id }}"><i
+                                    class="right floated hover heart icon"></i></a>
+                    @endif
                     <div class="header">{{ $email->email }}</div>
                     <div class="meta">
-                        @if($email->email == $user->email)
+                        @if($email->isPrimary())
                             Primary
                         @endif
                         {{ $email->verified ? 'Verified' : 'Unverified' }}

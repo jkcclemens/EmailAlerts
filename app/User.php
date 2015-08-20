@@ -6,21 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 
 /**
- * App\Models\User
+ * App\User
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\ $related[] $morphedByMany
  * @property integer $id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $email
  * @property string $password
- * @method static Builder|\App\User whereId($value)
- * @method static Builder|\App\User whereCreatedAt($value)
- * @method static Builder|\App\User whereUpdatedAt($value)
- * @method static Builder|\App\User whereEmail($value)
- * @method static Builder|\App\User wherePassword($value)
  * @property string $remember_token
- * @method static Builder|\App\User whereRememberToken($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Email[] $emails
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
  */
 class User extends Model implements Authenticatable {
 
