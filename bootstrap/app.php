@@ -63,9 +63,9 @@ $app->middleware([
     Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
 ]);
 
- $app->routeMiddleware([
-     'auth' => App\Http\Middleware\AuthMiddleware::class,
- ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\AuthMiddleware::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ $app->middleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 
