@@ -9,7 +9,9 @@
         "vlucas/phpdotenv": "~1.0",
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
-        "contextio/php-contextio-lite": "dev-master"
+        "contextio/php-contextio-lite": "dev-master",
+        "predis/predis": "~1.0",
+        "illuminate/redis": "~5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
