@@ -28,7 +28,7 @@ class SendVerificationEmail extends Job implements SelfHandling, ShouldQueue {
                 'verify_link' => url('/verifyemail/' . $email->id . '/' . $email->verification_key)
             ],
             function ($m) use ($email) {
-                $m->to($email)->subject('Verify your email!');
+                $m->to($email->email)->subject('Verify your email!');
             }
         );
     }
