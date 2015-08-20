@@ -23,6 +23,7 @@
         @foreach($user->emails as $email)
             <div class="{{ $email->verified ? 'green' : 'red' }} card">
                 <div class="content">
+                    <a href="/removeemail/{{ $email->id }}"><i class="right floated hover close icon"></i></a>
                     <div class="header">{{ $email->email }}</div>
                     <div class="meta">
                         @if($email->email == $user->email)

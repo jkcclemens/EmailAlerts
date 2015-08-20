@@ -22,3 +22,15 @@ div.title .ui.header div.sub.header {
 i.icon {
   cursor: default;
 }
+i.icon.hover {
+  opacity: 0.5;
+}
+i.icon.hover:hover {
+  opacity: 1;
+}
+i.icon.close {
+  cursor: pointer;
+}
+a > i.icon.close {
+  color: rgba(0, 0, 0, 0.87);
+}

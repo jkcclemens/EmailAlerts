@@ -19,6 +19,15 @@ class EmailController extends DefaultController {
         return redirect()->back();
     }
 
+    public function removeEmail($id) {
+        /**
+         * @var $email Email
+         */
+        $email = Email::find($id);
+        $email->delete();
+        return redirect('/');
+    }
+
     public function verifyEmail($id, $verificationKey) {
         /**
          * @var $email Email

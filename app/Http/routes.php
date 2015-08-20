@@ -22,10 +22,5 @@ $app->post('/login', ['uses' => 'LoginController@logIn']);
 $app->group(['middleware' => 'auth'], function (\Laravel\Lumen\Application $app) {
     $app->post('/addemail', ['uses' => '\App\Http\Controllers\EmailController@addEmail']);
     $app->get('/verifyemail/{id}/{verificationKey}', ['uses' => '\App\Http\Controllers\EmailController@verifyEmail']);
-});
-
-
-$app->get('/bcrypt/{whatever}', function ($whatever) {
-    $bc = bcrypt($whatever);
-    return $whatever . " -> " . $bc . " (" . Hash::check($whatever, $bc) . ")";
+    $app->get('/removeemail/{id}', ['uses' => '\App\Http\Controllers\EmailController@removeEmail']);
 });

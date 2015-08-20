@@ -24,4 +24,18 @@ div.title {
 
 i.icon {
   cursor: default;
+
+  &.hover {
+    opacity: 0.5;
+  }
+  &.hover:hover {
+    opacity: 1;
+  }
+
+  &.close {
+    cursor: pointer;
+    a > & {
+      color: rgba(0, 0, 0, 0.87);
+    }
+  }
 }
