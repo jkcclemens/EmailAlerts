@@ -107,7 +107,7 @@ class LoginController extends DefaultController {
 
     public function showResetPassword($id, $reset_key) {
         $this->setTitle('Reset password');
-        return view('reset-password')->with(['id' => $id, 'reset_key' => $reset_key]);
+        return view('reset-password')->with(['id' => $id, 'resetToken' => $reset_key]);
     }
 
     public function resetPassword(Request $request) {
