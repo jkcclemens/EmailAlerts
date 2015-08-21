@@ -91,6 +91,7 @@ class EmailController extends DefaultController {
         }
         $notification->email_id = $email->id;
         $notification->subject = $data['message_data']['subject'];
+        $notification->save();
         return response(json_encode(['status' => 'received']), $headers = ['Content-Type' => 'application/json']);
     }
 
