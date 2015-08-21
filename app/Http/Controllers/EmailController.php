@@ -7,6 +7,7 @@ use Auth;
 use ContextIO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Pushbullet\Pushbullet;
 
 class EmailController extends DefaultController {
 
@@ -71,6 +72,9 @@ class EmailController extends DefaultController {
     }
 
     public function receive(Request $request) {
+        if (!Auth::user()->pb_access_token) {
+            return response(json_encode(['error' => 'Pushbullet not authenticated.']), 400, ['Content-Type' => 'application/json']);
+        }
         $data = $request->json()->all();
         if ($data['signature'] != hash_hmac('sha256', $data['timestamp'] . $data['token'], env('CONTEXT_IO_SECRET'))) {
             return response(json_encode(['error' => 'Invalid signature']), 400);
@@ -80,7 +84,7 @@ class EmailController extends DefaultController {
          */
         $email = Email::whereEmail(Arr::get($data, 'message_data.addresses.from.email'))->first();
         if (is_null($email)) {
-            return response(json_encode(['error' => 'Unknown email']), 404);
+            return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
         }
         $notification = new Notification();
         if ($email->verified and $email->notifications()->count() < 1) {
@@ -96,6 +100,8 @@ class EmailController extends DefaultController {
         $notification->email_id = $email->id;
         $notification->subject = Arr::get($data, 'message_data.subject');
         $notification->save();
+        $push = new Pushbullet(Auth::user()->pb_access_token);
+        $push->allDevices()->pushNote($notification->subject, '');
         return response(json_encode(['status' => 'received']), 200, ['Content-Type' => 'application/json']);
     }
 
