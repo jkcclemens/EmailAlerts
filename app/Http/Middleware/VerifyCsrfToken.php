@@ -15,7 +15,7 @@ class VerifyCsrfToken {
      */
     protected $encrypter;
     private $excludes = [
-        'pb_auth'
+        'receive'
     ];
 
     /**
