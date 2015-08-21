@@ -55,6 +55,10 @@
                             Primary
                         @endif
                         {{ $email->verified ? 'Verified' : 'Unverified' }}
+                        <?
+                        $emailCount = $email->notifications->where('email_id', '' . $email->id)->count();
+                        ?>
+                        – {{ $emailCount . ' ' . str_plural('email', $emailCount) }}
                     </div>
                 </div>
             </div>
