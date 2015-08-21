@@ -76,8 +76,6 @@ class EmailController extends DefaultController {
         /**
          * @var $email Email
          */
-        Log::info($request->getContent());
-        Log::info(Arr::get($data, 'message_data.addresses.from.email'));
         $email = Email::whereEmail(Arr::get($data, 'message_data.addresses.from.email'))->first();
         if (is_null($email)) {
 //            return response($status = 404);
@@ -86,7 +84,7 @@ class EmailController extends DefaultController {
         $notification = new Notification();
         if ($email->verified and $email->notifications()->count() < 1) {
             $contextIO = new ContextIO(env('CONTEXT_IO_KEY'), env('CONTEXT_IO_SECRET'));
-            $message = $contextIO->getMessage(Arr::get($data, 'account_id'), [
+            $message = $contextIO->getMessageBody(Arr::get($data, 'account_id'), [
                 'label' => 0,
                 'folder' => Arr::get($data, 'message_data->folders.0'),
                 'message_id' => Arr::get($data, 'message_data.message_id'),
