@@ -86,8 +86,11 @@ class EmailController extends DefaultController {
         if (is_null($email)) {
             return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
         }
+        if (!$email->verified) {
+            return response(json_encode(['error' => 'Unverified email'], 400, ['Content-Type' => 'application/json']));
+        }
         $notification = new Notification();
-        if ($email->verified and $email->notifications()->count() < 1) {
+        if ($email->notifications()->count() < 1) {
             $contextIO = new ContextIO(env('CONTEXT_IO_KEY'), env('CONTEXT_IO_SECRET'));
             $message = $contextIO->getMessageBody(Arr::get($data, 'account_id'), [
                 'label' => 0,
