@@ -6,6 +6,7 @@ use App\Notification;
 use Auth;
 use ContextIO;
 use Illuminate\Http\Request;
+use Log;
 
 class EmailController extends DefaultController {
 
@@ -74,7 +75,8 @@ class EmailController extends DefaultController {
         /**
          * @var $email Email
          */
-        file_put_contents('data', $data);
+        Log::info($request->getContent());
+        Log::info($data->get('message_data.addresses.from.email'));
         $email = Email::whereEmail($data->get('message_data.addresses.from.email'))->first();
         if (is_null($email)) {
 //            return response($status = 404);
