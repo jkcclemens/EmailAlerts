@@ -82,10 +82,18 @@ class EmailController extends DefaultController {
         if ($data['signature'] != hash_hmac('sha256', $data['timestamp'] . $data['token'], env('CONTEXT_IO_SECRET'))) {
             return response(json_encode(['error' => 'Invalid signature']), 400);
         }
+        $isForward = $this->isGmailForwardEmail($data);
+        $body = null;
+        if ($isForward) {
+            $body = $this->downloadBody($data);
+            $email = explode(' ', $body)[0];
+        } else {
+            $email = Arr::get($data, 'message_data.addresses.from.email');
+        }
         /**
          * @var $email Email
          */
-        $email = Email::whereEmail(Arr::get($data, 'message_data.addresses.from.email'))->first();
+        $email = Email::whereEmail($email)->first();
         if (is_null($email)) {
             return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
         }
@@ -134,6 +142,21 @@ class EmailController extends DefaultController {
             }
         }
         return $subject;
+    }
+
+    private function isGmailForwardEmail($data) {
+        return Arr::get($data, 'message_data.addresses.from.email') == "forwarding-noreply@google.com";
+    }
+
+    private function downloadBody($data) {
+        $contextIO = new ContextIO(env('CONTEXT_IO_KEY'), env('CONTEXT_IO_SECRET'));
+        $message = $contextIO->getMessageBody(Arr::get($data, 'account_id'), [
+            'label' => 0,
+            'folder' => Arr::get($data, 'message_data.folders.0'),
+            'message_id' => Arr::get($data, 'message_data.message_id'),
+            'type' => 'text/plain'
+        ]);
+        return Arr::get($message->getData(), 'bodies.0.content');
     }
 
 }
