@@ -1,14 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-    <form class="ui form" method="post" action="/signup">
+    <form class="ui form" method="post" action="/reset">
         <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" placeholder="excited@foremail.alerts" type="email" value="{{ \Illuminate\Support\Facades\Input::get('email') }}"/>
-        </div>
-        <div class="field">
-            <label for="password">Password</label>
-            <input id="password" name="password" placeholder="something_way_stronger_than_this" type="password"/>
+            <label for="new_password">New password</label>
+            <input id="new_password" name="new_password" placeholder="something_stronger_than_this" type="password"/>
         </div>
         <div class="ui error message">
             @if(count($errors) > 0)
@@ -20,13 +16,11 @@
                 <script>document.getElementsByClassName('ui error message')[0].style['display'] = 'block';</script>
             @endif
         </div>
+        <input type="hidden" name="id" value="{{ $id }}"/>
+        <input type="hidden" name="reset_token" value="{{ $resetToken }}"/>
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-        <button class="big green ui button" type="submit">Sign up</button>
+        <button class="big green ui button" type="submit">Send me a reset link</button>
     </form>
-@endsection
-
-@section('bottom')
-    <script src="js/sign-up.js"></script>
 @endsection
 
 @section('errors')@endsection

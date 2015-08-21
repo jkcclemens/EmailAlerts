@@ -17,29 +17,11 @@ class SendVerificationEmail extends Job {
             'emails.verify_email',
             [
                 'email' => $email->email,
-                'verify_link' => 'https://emailalerts.xyz/verifyemail/' . $email->id . '/' . $email->verification_key // TODO: Update
+                'verify_link' => 'https://emailalerts.xyz/verifyemail/' . $email->id . '/' . $email->verification_key
             ],
             function ($m) use ($email) {
                 $m->to($email->email)->subject('Verify your email!');
             }
         );
-    }
-
-    /**
-     * Fire the job.
-     *
-     * @return void
-     */
-    public function fire() {
-        // TODO: Implement fire() method.
-    }
-
-    /**
-     * Get the raw body string for the job.
-     *
-     * @return string
-     */
-    public function getRawBody() {
-        // TODO: Implement getRawBody() method.
     }
 }

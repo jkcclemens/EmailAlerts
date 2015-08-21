@@ -25,4 +25,10 @@ class PushbulletController extends DefaultController {
         return redirect('/');
     }
 
+    function unlink() {
+        Auth::user()->pb_access_token = null;
+        Auth::user()->save();
+        return redirect('/');
+    }
+
 }

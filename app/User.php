@@ -14,8 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $password
  * @property string $remember_token
  * @property string $pb_access_token
+ * @property string $reset_key
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Email[] $emails
- * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ $related[] $morphedByMany
  * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User wherePbAccessToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereResetKey($value)
  */
 class User extends Model implements Authenticatable {
 
@@ -32,6 +34,12 @@ class User extends Model implements Authenticatable {
 
     public function notifications() {
         return $this->hasManyThrough('App\Notification', 'App\Email');
+    }
+
+    public function generateResetKey() {
+        $this->reset_key = str_random(16);
+        $this->save();
+        return $this->reset_key;
     }
 
     /**

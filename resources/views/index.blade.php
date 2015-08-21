@@ -1,12 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-    @if(session('message'))
-        <div class="ui positive message">
-            {{ session('message') }}
-        </div>
-    @endif
-    @yield('errors')
     <h2>Why?</h2>
 
     <p>

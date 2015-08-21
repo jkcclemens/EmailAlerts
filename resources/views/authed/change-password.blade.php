@@ -1,14 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
-    <form class="ui form" method="post" action="/signup">
+    <form class="ui form" method="post" action="/changepassword">
         <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" placeholder="excited@foremail.alerts" type="email" value="{{ \Illuminate\Support\Facades\Input::get('email') }}"/>
+            <label for="old_password">Old password</label>
+            <input id="old_password" name="old_password" placeholder="1n5ecur3" type="password"/>
         </div>
         <div class="field">
-            <label for="password">Password</label>
-            <input id="password" name="password" placeholder="something_way_stronger_than_this" type="password"/>
+            <label for="new_password">New password</label>
+            <input id="new_password" name="new_password" placeholder="something_way_stronger_than_this"
+                   type="password"/>
         </div>
         <div class="ui error message">
             @if(count($errors) > 0)
@@ -21,12 +22,8 @@
             @endif
         </div>
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-        <button class="big green ui button" type="submit">Sign up</button>
+        <button class="big green ui button" type="submit">Change password</button>
     </form>
-@endsection
-
-@section('bottom')
-    <script src="js/sign-up.js"></script>
 @endsection
 
 @section('errors')@endsection

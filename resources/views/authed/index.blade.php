@@ -1,20 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-    @if(session('message'))
-        <div class="ui positive message">
-            {{ session('message') }}
-        </div>
-    @endif
-    @if(count($errors) > 0)
-        <div class="ui error message">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <p>
         Set your email provider up to forward emails that you want as notifications to <em>receive@emailalerts.xyz</em>.
         Received emails will appear below!
@@ -92,6 +78,9 @@
 @section('right_cards')
     <div class="{{ Auth::user()->pb_access_token ? "green" : "red" }} card">
         <div class="content">
+            @if(Auth::user()->pb_access_token)
+                <a href="/unlink_pushbullet"><i class="left floated hover close icon"></i></a>
+            @endif
             <div class="header">
                 Pushbullet status
             </div>

@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers;
 
 use App\Email;
+use App\Jobs\PushJob;
 use App\Jobs\SendVerificationEmail;
 use App\Notification;
 use Auth;
 use ContextIO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Pushbullet\Pushbullet;
 
 class EmailController extends DefaultController {
 
@@ -100,8 +100,7 @@ class EmailController extends DefaultController {
         $notification->email_id = $email->id;
         $notification->subject = Arr::get($data, 'message_data.subject');
         $notification->save();
-        $push = new Pushbullet(Auth::user()->pb_access_token);
-        $push->allDevices()->pushNote($notification->subject, '');
+        $this->dispatch(new PushJob(Auth::user()->pb_access_token, $notification->subject));
         return response(json_encode(['status' => 'received']), 200, ['Content-Type' => 'application/json']);
     }
 

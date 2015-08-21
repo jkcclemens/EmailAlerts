@@ -23,7 +23,7 @@ i.icon {
   cursor: default;
 }
 i.icon.hover {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 i.icon.hover:hover {
   opacity: 1;
@@ -31,4 +31,8 @@ i.icon.hover:hover {
 a > i.icon {
   color: rgba(0, 0, 0, 0.87);
   cursor: pointer;
+  transition: opacity 0.1s ease 0s;
+}
+.ui.card .meta *, .ui.cards > .card .meta * {
+  margin-right: 0;
 }
