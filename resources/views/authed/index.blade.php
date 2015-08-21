@@ -58,7 +58,7 @@
                         <?
                         $emailCount = $email->notifications->where('email_id', '' . $email->id)->count();
                         ?>
-                        – {{ $emailCount . ' ' . str_plural('email', $emailCount) }}
+                        – {{ $emailCount . ' ' . str_plural('notification', $emailCount) }}
                     </div>
                 </div>
             </div>
