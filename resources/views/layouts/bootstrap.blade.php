@@ -13,6 +13,7 @@
 </div>
 <script src="//cdn.jsdelivr.net/jquery/3.0.0-alpha1/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/semantic-ui/2.0.8/semantic.min.js"></script>
+<script src="/js/main.js"></script>
 @yield('bottom')
 </body>
 </html>

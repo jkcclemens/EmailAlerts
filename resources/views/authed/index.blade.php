@@ -89,25 +89,23 @@
     </div>
 @endsection
 
-@section('right')
-    <div class="ui cards">
-        <div class="{{ Auth::user()->pb_access_token ? "green" : "red" }} card">
-            <div class="content">
-                <div class="header">
-                    Pushbullet status
-                </div>
-                <div class="meta">
-                    {{ Auth::user()->pb_access_token ? "Linked" : "Not linked" }}
-                </div>
-                <div class="description">
-                    @if(Auth::user()->pb_access_token)
-                        You're set up to receive notifications!
-                    @else
-                        You're not set up to receive notifications. Please, click
-                        <a href="https://www.pushbullet.com/authorize?client_id={{ env('PUSHBULLET_CLIENT_ID') }}&response_type=code&redirect_uri={{ urlencode(url('/pb_auth')) }}">here</a>
-                        to set up Pushbullet.
-                    @endif
-                </div>
+@section('right_cards')
+    <div class="{{ Auth::user()->pb_access_token ? "green" : "red" }} card">
+        <div class="content">
+            <div class="header">
+                Pushbullet status
+            </div>
+            <div class="meta">
+                {{ Auth::user()->pb_access_token ? "Linked" : "Not linked" }}
+            </div>
+            <div class="description">
+                @if(Auth::user()->pb_access_token)
+                    You're set up to receive notifications!
+                @else
+                    You're not set up to receive notifications. Please, click
+                    <a href="https://www.pushbullet.com/authorize?client_id={{ env('PUSHBULLET_CLIENT_ID') }}&response_type=code&redirect_uri={{ urlencode(url('/pb_auth')) }}">here</a>
+                    to set up Pushbullet.
+                @endif
             </div>
         </div>
     </div>

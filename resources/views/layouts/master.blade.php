@@ -2,10 +2,33 @@
 
 @section('base')
         <!--suppress HtmlUnknownTag -->
-<div class="grid-25">
-    @section('left')&nbsp;@show
-</div>
-<div class="grid-50">
+<div class="grid-50 push-25" id="main">
+    <div class="ui left rail">
+        <div class="ui sticky">
+            @yield('left')
+        </div>
+    </div>
+    <div class="ui right rail" style="text-align: right;">
+        <div class="ui sticky">
+            <div class="ui cards">
+                <div class="card">
+                    <div class="content">
+                        @if(Auth::check())
+                            <div class="header">Welcome back!</div>
+                            <div class="meta">
+                                <a href="/logout">Log out</a>
+                            </div>
+                        @else
+                            <div class="header">Howdy!</div>
+                            <a href="/signup">Sign up</a> or <a href="/login">log in</a>
+                        @endif
+                    </div>
+                </div>
+                @yield('right_cards')
+            </div>
+        </div>
+        @yield('right')
+    </div>
     <div class="title">
         <h2 class="ui center aligned icon header">
             <i class="mail outline icon"></i>
@@ -18,13 +41,5 @@
         </h2>
     </div>
     @yield('content')
-</div>
-<div class="grid-25" style="text-align: right;">
-    @if(Auth::check())
-        Welcome back! | <a href="/logout">Log out</a>
-    @else
-        <a href="/signup">Sign up</a> | <a href="/login">Log in</a>
-    @endif
-    @yield('right')
 </div>
 @endsection
