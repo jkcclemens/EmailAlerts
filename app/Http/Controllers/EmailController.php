@@ -11,6 +11,12 @@ use Illuminate\Support\Arr;
 
 class EmailController extends DefaultController {
 
+    const PREFIXES = [
+        'Fwd:',
+        'Forward:',
+        'Fw:'
+    ];
+
     public function addEmail(Request $request) {
         $this->validate($request, [
             'email' => 'required|email|unique:emails,email,NULL,id,verified,1|unique:emails,email,NULL,id,user_id,' . Auth::user()->id
@@ -101,7 +107,7 @@ class EmailController extends DefaultController {
             $notification->data = Arr::get($message->getData(), 'bodies.0.content');
         }
         $notification->email_id = $email->id;
-        $notification->subject = Arr::get($data, 'message_data.subject');
+        $notification->subject = $this->replaceForwardPrefix(Arr::get($data, 'message_data.subject'));
         $notification->save();
         $this->dispatch(new PushJob(Auth::user()->pb_access_token, $notification->subject));
         return response(json_encode(['status' => 'received']), 200, ['Content-Type' => 'application/json']);
@@ -118,6 +124,15 @@ class EmailController extends DefaultController {
         Auth::user()->email = $email->email;
         Auth::user()->save();
         return redirect('/');
+    }
+
+    private function replaceForwardPrefix($subject) {
+        foreach (EmailController::PREFIXES as $prefix) {
+            $prefix .= ' ';
+            if (stripos($subject, $prefix) !== false) {
+                return preg_replace('/' . $prefix . '/i', '', $subject, 1);
+            }
+        }
     }
 
 }
