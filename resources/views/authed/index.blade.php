@@ -26,7 +26,7 @@
     @else
         <div class="ui cards">
             @foreach(Auth::user()->notifications as $notification)
-                <div class="card">
+                <div class="ui fluid card">
                     <div class="content">
                         <div class="header">
                             {{ $notification->subject }}
