@@ -15,13 +15,35 @@
             </ul>
         </div>
     @endif
-    <p>
-        Sent notifications will appear here, once some arrive.
-    </p>
-    <p>
-        If you're expecting a forwarding verification email, the first email to arrive from any newly-verified email
-        address will be available in its entirety on this page, once it arrives.
-    </p>
+    @if(Auth::user()->notifications()->count() < 1)
+        <p>
+            Sent notifications will appear here, once some arrive.
+        </p>
+        <p>
+            If you're expecting a forwarding verification email, the first email to arrive from any newly-verified email
+            address will be available in its entirety on this page, once it arrives.
+        </p>
+    @else
+        <div class="ui cards">
+            @foreach(Auth::user()->notifications as $notification)
+                <div class="card">
+                    <div class="content">
+                        <div class="header">
+                            {{ $notification->subject }}
+                        </div>
+                        <div class="meta">
+                            {{ $notification->email->email }}
+                        </div>
+                        @if($notification->data)
+                            <div class="description">
+                                {{ $notification->data }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
 @endsection
 
 @section('left')
@@ -58,6 +80,30 @@
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('right')
+    <div class="ui cards">
+        <div class="{{ Auth::user()->pb_access_token ? "green" : "red" }} card">
+            <div class="content">
+                <div class="header">
+                    Pushbullet status
+                </div>
+                <div class="meta">
+                    {{ Auth::user()->pb_access_token ? "Linked" : "Not linked" }}
+                </div>
+                <div class="description">
+                    @if(Auth::user()->pb_access_token)
+                        You're set up to receive notifications!
+                    @else
+                        You're not set up to receive notifications. Please, click
+                        <a href="https://www.pushbullet.com/authorize?client_id={{ env('PUSHBULLET_CLIENT_ID') }}&response_type=code">here</a>
+                        to set up Pushbullet.
+                    @endif
+                </div>
             </div>
         </div>
     </div>

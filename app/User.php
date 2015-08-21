@@ -3,7 +3,6 @@ namespace App;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 /**
  * App\User
@@ -14,6 +13,7 @@ use Illuminate\Database\Query\Builder;
  * @property string $email
  * @property string $password
  * @property string $remember_token
+ * @property string $pb_access_token
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Email[] $emails
  * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany
  * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
@@ -22,11 +22,16 @@ use Illuminate\Database\Query\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePbAccessToken($value)
  */
 class User extends Model implements Authenticatable {
 
     public function emails() {
         return $this->hasMany('App\Email');
+    }
+
+    public function notifications() {
+        return $this->hasManyThrough('App\Notification', 'App\Email');
     }
 
     /**
