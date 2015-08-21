@@ -15,7 +15,7 @@
         </p>
     @else
         <div class="ui cards">
-            @foreach(array_reverse(Auth::user()->notifications) as $notification)
+            @foreach(Auth::user()->notifications->reverse() as $notification)
                 <div class="ui fluid card">
                     <div class="content">
                         <div class="header">
