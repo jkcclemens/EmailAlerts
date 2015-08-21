@@ -78,9 +78,6 @@ class EmailController extends DefaultController {
     }
 
     public function receive(Request $request) {
-        if (!Auth::user()->pb_access_token) {
-            return response(json_encode(['error' => 'Pushbullet not authenticated.']), 400, ['Content-Type' => 'application/json']);
-        }
         $data = $request->json()->all();
         if ($data['signature'] != hash_hmac('sha256', $data['timestamp'] . $data['token'], env('CONTEXT_IO_SECRET'))) {
             return response(json_encode(['error' => 'Invalid signature']), 400);
@@ -91,6 +88,9 @@ class EmailController extends DefaultController {
         $email = Email::whereEmail(Arr::get($data, 'message_data.addresses.from.email'))->first();
         if (is_null($email)) {
             return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
+        }
+        if (!$email->user->pb_access_token) {
+            return response(json_encode(['error' => 'Pushbullet not authenticated.']), 400, ['Content-Type' => 'application/json']);
         }
         if (!$email->verified) {
             return response(json_encode(['error' => 'Unverified email'], 400, ['Content-Type' => 'application/json']));
@@ -109,7 +109,7 @@ class EmailController extends DefaultController {
         $notification->email_id = $email->id;
         $notification->subject = $this->replaceForwardPrefix(Arr::get($data, 'message_data.subject'));
         $notification->save();
-        $this->dispatch(new PushJob(Auth::user()->pb_access_token, $notification->subject));
+        $this->dispatch(new PushJob($email->user->pb_access_token, $notification->subject));
         return response(json_encode(['status' => 'received']), 200, ['Content-Type' => 'application/json']);
     }
 
