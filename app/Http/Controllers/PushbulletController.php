@@ -20,7 +20,7 @@ class PushbulletController extends DefaultController {
                 'code' => $code
             ]
         ])->getBody()->getContents());
-        Auth::user()->pb_access_token = $data['access_token'];
+        Auth::user()->pb_access_token = $data->access_token;
         Auth::user()->save();
         return redirect('/');
     }
