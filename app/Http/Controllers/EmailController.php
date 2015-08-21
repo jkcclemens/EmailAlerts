@@ -113,6 +113,8 @@ class EmailController extends DefaultController {
                 'type' => 'text/plain'
             ]);
             $notification->data = Arr::get($message->getData(), 'bodies.0.content');
+        } else {
+            $notification->data = null;
         }
         $notification->email_id = $email->id;
         $notification->subject = $this->replaceForwardPrefix(Arr::get($data, 'message_data.subject'));
