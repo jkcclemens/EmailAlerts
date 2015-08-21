@@ -16,7 +16,8 @@
         </div>
     @endif
     <p>
-        Set your email provider up to forward emails that you want as notifications to <em>receive@{{ url() }}</em>.
+        Set your email provider up to forward emails that you want as notifications to
+        <em>receive{{ '@' . url() }}</em>.
         Received emails will appear below!
     </p>
     @if(Auth::user()->notifications()->count() < 1)
