@@ -86,9 +86,9 @@ class EmailController extends DefaultController {
             $contextIO = new ContextIO(env('CONTEXT_IO_KEY'), env('CONTEXT_IO_SECRET'));
             $message = $contextIO->getMessageBody(Arr::get($data, 'account_id'), [
                 'label' => 0,
-                'folder' => Arr::get($data, 'message_data->folders.0'),
+                'folder' => Arr::get($data, 'message_data.folders.0'),
                 'message_id' => Arr::get($data, 'message_data.message_id'),
-                'type' => 'text'
+                'type' => 'text/plain'
             ]);
             $notification->data = $message->getData()->body_section;
         }
