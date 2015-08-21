@@ -17,4 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Notification extends Model {
 
+    public function email() {
+        return $this->belongsTo('App\Email');
+    }
+
 }
