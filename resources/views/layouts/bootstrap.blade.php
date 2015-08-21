@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>{{ $title }}</title>
+    <link rel="icon" href="/img/favicon.png"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/unsemantic/0.1/stylesheets/unsemantic-grid-responsive.css"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/semantic-ui/2.0.8/semantic.min.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
