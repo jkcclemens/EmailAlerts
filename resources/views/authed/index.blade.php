@@ -15,6 +15,10 @@
             </ul>
         </div>
     @endif
+    <p>
+        Set your email provider up to forward emails that you want as notifications to <em>receive@{{ url() }}</em>.
+        Received emails will appear below!
+    </p>
     @if(Auth::user()->notifications()->count() < 1)
         <p>
             Sent notifications will appear here, once some arrive.
@@ -24,10 +28,6 @@
             address will be available in its entirety on this page, once it arrives.
         </p>
     @else
-        <p>
-            Set your email provider up to forward emails that you want as notifications to <em>receive@{{ url() }}</em>.
-            Received emails will appear below!
-        </p>
         <div class="ui cards">
             @foreach(Auth::user()->notifications as $notification)
                 <div class="ui fluid card">
