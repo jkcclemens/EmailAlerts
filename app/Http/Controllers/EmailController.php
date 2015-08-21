@@ -80,8 +80,7 @@ class EmailController extends DefaultController {
          */
         $email = Email::whereEmail(Arr::get($data, 'message_data.addresses.from.email'))->first();
         if (is_null($email)) {
-//            return response($status = 404);
-            return response('', 404);
+            return response(json_encode(['error' => 'Unknown email']), 404);
         }
         $notification = new Notification();
         if ($email->verified and $email->notifications()->count() < 1) {
