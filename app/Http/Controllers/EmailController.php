@@ -76,7 +76,8 @@ class EmailController extends DefaultController {
          */
         $email = Email::whereEmail($data->get('message_data.addresses.from.email'))->first();
         if (is_null($email)) {
-            return response($status = 404);
+//            return response($status = 404);
+            return response('', 404);
         }
         $notification = new Notification();
         if ($email->verified and $email->notifications()->count() < 1) {
