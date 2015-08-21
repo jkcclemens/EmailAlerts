@@ -7,7 +7,6 @@ use Auth;
 use ContextIO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Log;
 
 class EmailController extends DefaultController {
 
@@ -95,7 +94,7 @@ class EmailController extends DefaultController {
         $notification->email_id = $email->id;
         $notification->subject = Arr::get($data, 'message_data.subject');
         $notification->save();
-        return response(json_encode(['status' => 'received']), $headers = ['Content-Type' => 'application/json']);
+        return response(json_encode(['status' => 'received']), 200, ['Content-Type' => 'application/json']);
     }
 
 }
