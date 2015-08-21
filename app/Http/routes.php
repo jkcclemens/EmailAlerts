@@ -34,7 +34,3 @@ $app->group(['middleware' => 'auth'], function (\Laravel\Lumen\Application $app)
     $app->get('/pb_auth', ['uses' => '\App\Http\Controllers\PushbulletController@authResult']);
     $app->get('/unlink_pushbullet', ['uses' => '\App\Http\Controllers\PushbulletController@unlink']);
 });
-
-$app->get('/bcrypt/{something}', function($something) {
-    return bcrypt($something);
-});
