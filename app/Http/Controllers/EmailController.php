@@ -133,6 +133,7 @@ class EmailController extends DefaultController {
                 return preg_replace('/' . $prefix . '/i', '', $subject, 1);
             }
         }
+        return $subject;
     }
 
 }
