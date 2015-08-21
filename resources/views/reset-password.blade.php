@@ -17,9 +17,9 @@
             @endif
         </div>
         <input type="hidden" name="id" value="{{ $id }}"/>
-        <input type="hidden" name="reset_token" value="{{ $resetToken }}"/>
+        <input type="hidden" name="reset_key" value="{{ $resetKey }}"/>
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-        <button class="big green ui button" type="submit">Send me a reset link</button>
+        <button class="big green ui button" type="submit">Change password</button>
     </form>
 @endsection
 
