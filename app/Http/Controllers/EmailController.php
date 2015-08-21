@@ -6,6 +6,7 @@ use App\Notification;
 use Auth;
 use ContextIO;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Log;
 
 class EmailController extends DefaultController {
@@ -71,13 +72,13 @@ class EmailController extends DefaultController {
     }
 
     public function receive(Request $request) {
-        $data = $request->json();
+        $data = $request->all();
         /**
          * @var $email Email
          */
         Log::info($request->getContent());
-        Log::info($data->get('message_data.addresses.from.email'));
-        $email = Email::whereEmail($data->get('message_data.addresses.from.email'))->first();
+        Log::info(Arr::get($data, 'message_data.addresses.from.email'));
+        $email = Email::whereEmail(Arr::get($data, 'message_data.addresses.from.email'))->first();
         if (is_null($email)) {
 //            return response($status = 404);
             return response('', 404);
@@ -85,16 +86,16 @@ class EmailController extends DefaultController {
         $notification = new Notification();
         if ($email->verified and $email->notifications()->count() < 1) {
             $contextIO = new ContextIO(env('CONTEXT_IO_KEY'), env('CONTEXT_IO_SECRET'));
-            $message = $contextIO->getMessage($data->get('account_id'), [
+            $message = $contextIO->getMessage(Arr::get($data, 'account_id'), [
                 'label' => 0,
-                'folder' => $data->get('message_data->folders.0'),
-                'message_id' => $data->get('message_data.message_id'),
+                'folder' => Arr::get($data, 'message_data->folders.0'),
+                'message_id' => Arr::get($data, 'message_data.message_id'),
                 'type' => 'text'
             ]);
             $notification->data = $message->getData()->body_section;
         }
         $notification->email_id = $email->id;
-        $notification->subject = $data->get('message_data.subject');
+        $notification->subject = Arr::get($data, 'message_data.subject');
         $notification->save();
         return response(json_encode(['status' => 'received']), $headers = ['Content-Type' => 'application/json']);
     }
