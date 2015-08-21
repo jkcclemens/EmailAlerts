@@ -2,7 +2,7 @@
 
 use Auth;
 use GuzzleHttp\Client;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class PushbulletController extends DefaultController {
 
