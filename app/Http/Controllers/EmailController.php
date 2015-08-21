@@ -97,4 +97,17 @@ class EmailController extends DefaultController {
         return response(json_encode(['status' => 'received']), 200, ['Content-Type' => 'application/json']);
     }
 
+    public function makePrimary($id) {
+        /**
+         * @var $email Email
+         */
+        $email = Email::find($id);
+        if (is_null($email)) {
+            return redirect('/')->withErrors(['Invalid email.']);
+        }
+        Auth::user()->email = $email->email;
+        Auth::user()->save();
+        return redirect('/');
+    }
+
 }
