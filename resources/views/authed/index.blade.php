@@ -100,7 +100,7 @@
                         You're set up to receive notifications!
                     @else
                         You're not set up to receive notifications. Please, click
-                        <a href="https://www.pushbullet.com/authorize?client_id={{ env('PUSHBULLET_CLIENT_ID') }}&response_type=code">here</a>
+                        <a href="https://www.pushbullet.com/authorize?client_id={{ env('PUSHBULLET_CLIENT_ID') }}&response_type=code&redirect_uri={{ urlencode(url('/pb_auth')) }}">here</a>
                         to set up Pushbullet.
                     @endif
                 </div>
