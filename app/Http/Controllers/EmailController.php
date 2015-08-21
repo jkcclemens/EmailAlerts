@@ -72,7 +72,7 @@ class EmailController extends DefaultController {
     }
 
     public function receive(Request $request) {
-        $data = $request->all();
+        $data = $request->json()->all();
         /**
          * @var $email Email
          */
@@ -90,7 +90,7 @@ class EmailController extends DefaultController {
                 'message_id' => Arr::get($data, 'message_data.message_id'),
                 'type' => 'text/plain'
             ]);
-            $notification->data = $message->getData()->body_section;
+            $notification->data = Arr::get($message->getData(), 'bodies.0.content');
         }
         $notification->email_id = $email->id;
         $notification->subject = Arr::get($data, 'message_data.subject');
