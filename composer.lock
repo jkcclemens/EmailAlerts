@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c2e50a2fc6bcd4b605415fb3f38645cb",
+    "hash": "14a13ba7bb298a533d74739ffaa66a9b",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -1997,6 +1997,55 @@
             "description": "The Illuminate View package.",
             "homepage": "http://laravel.com",
             "time": "2015-07-17 15:21:21"
+        },
+        {
+            "name": "ivkos/pushbullet",
+            "version": "3.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivkos/Pushbullet-for-PHP.git",
+                "reference": "cfde6d9ee4505ba6dcf0b3a23fb8fc7f1f47fb50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivkos/Pushbullet-for-PHP/zipball/cfde6d9ee4505ba6dcf0b3a23fb8fc7f1f47fb50",
+                "reference": "cfde6d9ee4505ba6dcf0b3a23fb8fc7f1f47fb50",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">= 5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pushbullet\\": "src/Pushbullet"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivaylo Stoyanov",
+                    "email": "me@ivkos.com",
+                    "homepage": "https://github.com/ivkos"
+                }
+            ],
+            "description": "Push notifications to devices and browsers via Pushbullet",
+            "homepage": "https://github.com/ivkos/Pushbullet-for-PHP",
+            "keywords": [
+                "android",
+                "chrome",
+                "firefox",
+                "iphone",
+                "notifications",
+                "push",
+                "pushbullet",
+                "windows"
+            ],
+            "time": "2015-05-23 13:55:11"
         },
         {
             "name": "laravel/lumen-framework",

@@ -72,6 +72,9 @@ class EmailController extends DefaultController {
 
     public function receive(Request $request) {
         $data = $request->json()->all();
+        if ($data['signature'] != hash_hmac('sha256', $data['timestamp'] . $data['token'], env('CONTEXT_IO_SECRET'))) {
+            return response(json_encode(['error' => 'Invalid signature']), 400);
+        }
         /**
          * @var $email Email
          */
