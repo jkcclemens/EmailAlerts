@@ -17,7 +17,7 @@ class SendVerificationEmail extends Job {
             'emails.verify_email',
             [
                 'email' => $email->email,
-                'verify_link' => 'https://emailalerts.royaldev.org/verifyemail/' . $email->id . '/' . $email->verification_key // TODO: Update
+                'verify_link' => 'https://emailalerts.xyz/verifyemail/' . $email->id . '/' . $email->verification_key // TODO: Update
             ],
             function ($m) use ($email) {
                 $m->to($email->email)->subject('Verify your email!');
