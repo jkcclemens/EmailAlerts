@@ -114,12 +114,7 @@ class EmailController extends DefaultController {
          */
         $email = Email::whereEmail($email)->first();
         if (is_null($email)) {
-            // Support sending emails directly, for now. Keeping this will make problems, I foresee.
-            $email = Arr::get($data, 'message_data.addresses.from.email');
-            $email = Email::whereEmail($email)->first();
-            if (is_null($email)) {
-                return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
-            }
+            return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
         }
         if (!$email->user->pb_access_token) {
             return response(json_encode(['error' => 'Pushbullet not authenticated.']), 400, ['Content-Type' => 'application/json']);
