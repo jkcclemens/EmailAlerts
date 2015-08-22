@@ -16,6 +16,15 @@ class EmailController extends DefaultController {
         'Forward:',
         'Fw:'
     ];
+    const EXPECTED_KEYS = [
+        'signature',
+        'timestamp',
+        'token',
+        'message_data.addresses.from.email',
+        'message_data.folders.0',
+        'message_data.message_id',
+        'message_data.subject'
+    ];
 
     public function addEmail(Request $request) {
         $this->validate($request, [
@@ -79,8 +88,13 @@ class EmailController extends DefaultController {
 
     public function receive(Request $request) {
         $data = $request->json()->all();
+        foreach (EmailController::EXPECTED_KEYS as $expected) {
+            if (is_null(Arr::get($data, $expected))) {
+                return response(json_encode(['error' => 'Invalid data'], 400), ['Content-Type' => 'application/json']);
+            }
+        }
         if ($data['signature'] != hash_hmac('sha256', $data['timestamp'] . $data['token'], env('CONTEXT_IO_SECRET'))) {
-            return response(json_encode(['error' => 'Invalid signature']), 400);
+            return response(json_encode(['error' => 'Invalid signature']), 400, ['Content-Type' => 'application/json']);
         }
         $isForward = $this->isGmailForwardEmail($data);
         $body = null;
