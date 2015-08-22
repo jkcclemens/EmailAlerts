@@ -21,6 +21,7 @@ class EmailController extends DefaultController {
         'timestamp',
         'token',
         'message_data.addresses.from.email',
+        'message_data.addresses.to.email',
         'message_data.folders.0',
         'message_data.message_id',
         'message_data.subject'
@@ -109,7 +110,12 @@ class EmailController extends DefaultController {
          */
         $email = Email::whereEmail($email)->first();
         if (is_null($email)) {
-            return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
+            // Remember, forwarding may actually set the to address as the original
+            $email = Arr::get($data, 'message_data.addresses.to.email');
+            $email = Email::whereEmail($email)->first();
+            if (is_null($email)) {
+                return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
+            }
         }
         if (!$email->user->pb_access_token) {
             return response(json_encode(['error' => 'Pushbullet not authenticated.']), 400, ['Content-Type' => 'application/json']);

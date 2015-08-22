@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
  * @property string $verification_key
  * @property-read \App\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Notification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\ $related[] $morphedByMany
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany
  * @method static \Illuminate\Database\Query\Builder|\App\Email whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Email whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Email whereUpdatedAt($value)
