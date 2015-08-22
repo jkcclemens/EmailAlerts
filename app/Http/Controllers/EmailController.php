@@ -103,16 +103,19 @@ class EmailController extends DefaultController {
             $body = $this->downloadBody($data);
             $email = explode(' ', $body)[0];
         } else {
-            $email = Arr::get($data, 'message_data.addresses.from.email');
+            // TODO: One day, support multiple to addresses and alert all verified addresses (once per account)
+            $email = Arr::get($data, 'message_data.addresses.to.0.email');
         }
+        // TODO: Make a different email for sending push notifications? Forwards keep the original message exactly as it
+        // was. So, the forwarded message isn't from the account that initially received it, it's from the original
+        // sender.
         /**
          * @var $email Email
          */
         $email = Email::whereEmail($email)->first();
         if (is_null($email)) {
-            // Remember, forwarding may actually set the to address as the original
-            // TODO: One day, support multiple to addresses and alert all verified addresses (once per account)
-            $email = Arr::get($data, 'message_data.addresses.to.0.email');
+            // Support sending emails directly, for now. Keeping this will make problems, I foresee.
+            $email = Arr::get($data, 'message_data.addresses.from.email');
             $email = Email::whereEmail($email)->first();
             if (is_null($email)) {
                 return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $pb_access_token
  * @property string $reset_key
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Email[] $emails
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Notification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\ $related[] $morphedByMany
  * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
