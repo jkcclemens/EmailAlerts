@@ -17,6 +17,7 @@ $app->get('/login', ['uses' => 'LoginController@showLogInPage']);
 $app->get('/logout', ['uses' => 'LoginController@logOut']);
 $app->get('/forgot', ['uses' => 'LoginController@showForgotPassword']);
 $app->get('/reset/{id}/{reset_key}', ['uses' => 'LoginController@showResetPassword']);
+$app->get('/info', ['uses' => 'IndexController@showInfo']);
 
 $app->post('/signup', ['uses' => 'LoginController@signUp']);
 $app->post('/login', ['uses' => 'LoginController@logIn']);

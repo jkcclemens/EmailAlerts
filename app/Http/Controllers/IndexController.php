@@ -8,4 +8,8 @@ class IndexController extends DefaultController {
         return view(Auth::check() ? 'authed.index' : 'index')->with('user', Auth::user());
     }
 
+    public function showInfo() {
+        return view('info');
+    }
+
 }

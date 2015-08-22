@@ -24,6 +24,12 @@
                         @endif
                     </div>
                 </div>
+                <div class="card">
+                    <div class="content">
+                        <div class="header">Info you should read</div>
+                        <a href="/info">Click here</a>
+                    </div>
+                </div>
                 @yield('right_cards')
             </div>
         </div>
