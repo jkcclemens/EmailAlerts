@@ -26,6 +26,15 @@ class EmailController extends DefaultController {
         'message_data.subject'
     ];
 
+    private function verifyArray($arr, $requiredKeys) {
+        foreach ($requiredKeys as $key) {
+            if (is_null(Arr::get($arr, $key))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function addEmail(Request $request) {
         $this->validate($request, [
             'email' => 'required|email|unique:emails,email,NULL,id,verified,1|unique:emails,email,NULL,id,user_id,' . Auth::user()->id
@@ -88,10 +97,8 @@ class EmailController extends DefaultController {
 
     public function receive(Request $request) {
         $data = $request->json()->all();
-        foreach (EmailController::EXPECTED_KEYS as $expected) {
-            if (is_null(Arr::get($data, $expected))) {
-                return response(json_encode(['error' => 'Invalid data']), 400, ['Content-Type' => 'application/json']);
-            }
+        if (!$this->verifyArray($data, EmailController::EXPECTED_KEYS)) {
+            return response(json_encode(['error' => 'Invalid data']), 400, ['Content-Type' => 'application/json']);
         }
         if ($data['signature'] != hash_hmac('sha256', $data['timestamp'] . $data['token'], env('CONTEXT_IO_SECRET'))) {
             return response(json_encode(['error' => 'Invalid signature']), 400, ['Content-Type' => 'application/json']);
