@@ -20,7 +20,6 @@ class EmailController extends DefaultController {
         'signature',
         'timestamp',
         'token',
-        'message_data.addresses.from.email',
         'message_data.addresses.to.0.email',
         'message_data.folders.0',
         'message_data.message_id',
