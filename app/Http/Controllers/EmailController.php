@@ -90,7 +90,7 @@ class EmailController extends DefaultController {
         $data = $request->json()->all();
         foreach (EmailController::EXPECTED_KEYS as $expected) {
             if (is_null(Arr::get($data, $expected))) {
-                return response(json_encode(['error' => 'Invalid data'], 400), ['Content-Type' => 'application/json']);
+                return response(json_encode(['error' => 'Invalid data']), 400, ['Content-Type' => 'application/json']);
             }
         }
         if ($data['signature'] != hash_hmac('sha256', $data['timestamp'] . $data['token'], env('CONTEXT_IO_SECRET'))) {
