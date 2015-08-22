@@ -21,7 +21,7 @@ class EmailController extends DefaultController {
         'timestamp',
         'token',
         'message_data.addresses.from.email',
-        'message_data.addresses.to.email',
+        'message_data.addresses.to.0.email',
         'message_data.folders.0',
         'message_data.message_id',
         'message_data.subject'
@@ -111,7 +111,8 @@ class EmailController extends DefaultController {
         $email = Email::whereEmail($email)->first();
         if (is_null($email)) {
             // Remember, forwarding may actually set the to address as the original
-            $email = Arr::get($data, 'message_data.addresses.to.email');
+            // TODO: One day, support multiple to addresses and alert all verified addresses (once per account)
+            $email = Arr::get($data, 'message_data.addresses.to.0.email');
             $email = Email::whereEmail($email)->first();
             if (is_null($email)) {
                 return response(json_encode(['error' => 'Unknown email']), 404, ['Content-Type' => 'application/json']);
