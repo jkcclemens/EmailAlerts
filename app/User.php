@@ -34,7 +34,7 @@ class User extends Model implements Authenticatable {
     }
 
     public function notifications() {
-        return $this->hasManyThrough('App\Notification', 'App\Email');
+        return $this->hasManyThrough('App\Notification', 'App\Email')->orderBy('created_at', 'desc');
     }
 
     public function generateResetKey() {
