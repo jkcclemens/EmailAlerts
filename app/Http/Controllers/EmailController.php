@@ -55,6 +55,9 @@ class EmailController extends DefaultController {
         if ($email->isPrimary() and $email->user->emails()->count() < 2) {
             return redirect('/')->withErrors(['Cannot delete your only email!']);
         }
+        foreach ($email->notifications as $notification) {
+            $notification->delete();
+        }
         $email->delete();
         if ($email->isPrimary()) {
             $email->user->email = $email->user->emails[0]->email;
