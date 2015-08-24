@@ -140,6 +140,9 @@
                                 },
                                 data
                         );
+                        list.on('updated', function() {
+                            $('.ui.sticky').sticky('refresh');
+                        });
                     }
                 }
         );
