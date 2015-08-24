@@ -41,3 +41,27 @@ i.icon {
 .ui.card .meta *, .ui.cards > .card .meta * {
   margin-right: 0;
 }
+
+.ui.card > .content > .description:empty {
+  display: none;
+}
+
+#notifications > .ui.fluid.search {
+  padding-bottom: 1rem;
+}
+
+#notifications > .pagination-parent {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.list.ui.cards > .active.loader {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ui.pagination.menu:empty {
+  display: none;
+}

@@ -27,6 +27,8 @@ use Illuminate\Support\Str;
  */
 class Email extends Model {
 
+    protected $visible = ['email'];
+
     public function __construct() {
         parent::__construct();
         $this->verification_key = Str::random(16);

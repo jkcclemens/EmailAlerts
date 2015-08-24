@@ -14,24 +14,32 @@
             address will be available in its entirety on this page, once it arrives.
         </p>
     @else
-        <div class="ui cards">
-            @foreach(Auth::user()->notifications as $notification)
-                <div class="ui fluid card">
-                    <div class="content">
-                        <div class="header">
-                            {{ $notification->subject }}
-                        </div>
-                        <div class="meta">
-                            {{ $notification->email->email }}
-                        </div>
-                        @if($notification->data)
-                            <div class="description">
-                                {{ $notification->data }}
+        <div id="notifications">
+            <div class="ui fluid search">
+                <div class="ui fluid icon input">
+                    <input class="prompt" placeholder="Search notifications..." type="text"/>
+                    <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+            </div>
+            <div class="list ui cards">
+                <div class="ui active centered inline loader"></div>
+                <div style="display: none;">
+                    <div class="ui fluid card" id="template">
+                        <div class="content">
+                            <div class="header subject"></div>
+                            <span style="float: right;" class="meta created_at"></span>
+
+                            <div class="meta email">
                             </div>
-                        @endif
+                            <div class="description data"></div>
+                        </div>
                     </div>
                 </div>
-            @endforeach
+            </div>
+            <div class="pagination-parent">
+                <div class="ui pagination menu"></div>
+            </div>
         </div>
     @endif
 @endsection
@@ -105,4 +113,35 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('bottom')
+    <script src="/js/list.min.js"></script>
+    <script src="/js/list.pagination.min.js"></script>
+    <script src="/js/moment.js"></script>
+    <script>
+        $.ajax(
+                '/notifications',
+                {
+                    success: function (data) {
+                        $.each(data, function (number, datum) {
+                            console.log(datum);
+                            datum['created_at'] = moment(datum['created_at']).fromNow();
+                        });
+                        $('.list.ui.cards > .active.loader').removeClass('active');
+                        var list = new List(
+                                'notifications',
+                                {
+                                    item: 'template',
+                                    valueNames: ['subject'],
+                                    page: 5,
+                                    plugins: [ListPagination({})],
+                                    searchField: "prompt"
+                                },
+                                data
+                        );
+                    }
+                }
+        );
+    </script>
 @endsection
