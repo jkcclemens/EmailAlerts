@@ -28,10 +28,11 @@
                     <div class="ui fluid card" id="template">
                         <div class="content">
                             <div class="header subject"></div>
-                            <span style="float: right;" class="meta created_at"></span>
-
-                            <div class="meta email">
+                            <div class="meta time" style="float: right;">
+                                <span style="display: none;" class="created_at"></span>
+                                <span class="created_at_render"></span>
                             </div>
+                            <div class="meta email"></div>
                             <div class="description data"></div>
                         </div>
                     </div>
