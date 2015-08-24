@@ -125,7 +125,6 @@
                 {
                     success: function (data) {
                         $.each(data, function (number, datum) {
-                            console.log(datum);
                             datum['created_at'] = moment(datum['created_at']).fromNow();
                         });
                         $('.list.ui.cards > .active.loader').removeClass('active');
