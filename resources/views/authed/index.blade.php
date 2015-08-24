@@ -119,31 +119,5 @@
     <script src="/js/list.min.js"></script>
     <script src="/js/list.pagination.min.js"></script>
     <script src="/js/moment.js"></script>
-    <script>
-        $.ajax(
-                '/notifications',
-                {
-                    success: function (data) {
-                        $.each(data, function (number, datum) {
-                            datum['created_at'] = moment(datum['created_at']).fromNow();
-                        });
-                        $('.list.ui.cards > .active.loader').removeClass('active');
-                        var list = new List(
-                                'notifications',
-                                {
-                                    item: 'template',
-                                    valueNames: ['subject'],
-                                    page: 5,
-                                    plugins: [ListPagination({})],
-                                    searchField: "prompt"
-                                },
-                                data
-                        );
-                        list.on('updated', function() {
-                            $('.ui.sticky').sticky('refresh');
-                        });
-                    }
-                }
-        );
-    </script>
+    <script src="/js/authed.main.js"></script>
 @endsection
